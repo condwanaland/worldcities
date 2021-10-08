@@ -1,0 +1,69 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# worldcities
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+`worldcities` contains a dataset of 40,000 cities and associated metadata such as coordinates, country, and population. 
+
+## Installation
+
+You can install the released version of worldcities from github with:
+
+``` r
+remotes::install_github("condwanaland/worldcities")
+```
+
+
+## Example
+
+To use `worldcities` first load it with `library()`
+
+```{r example}
+library(worldcities)
+```
+
+You can then access the dataset by just calling `worldcities`
+
+```{r}
+wc <- worldcities
+head(wc)
+```
+
+You can then use this in any further analyses
+
+```{r}
+library(ggplot2)
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+# This grabs a map of the world from the `rnaturaldata` packages
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+ggplot(data = world) +
+    geom_sf() +
+    geom_point(data = worldcities, aes(x = lng, y = lat, size = population), 
+        shape = 23, fill = "darkred", alpha = 0.1) +
+    coord_sf()
+
+```
+There's way too much data to get anything meaningful from this view, but it does give you an idea of the areas this dataset covers. 
+
+## License
+
+Data for this package comes from SimpleMaps (https://simplemaps.com/data). The World Cities data is released under a CCBY license which is preserved here. The original, raw data can be found here (https://simplemaps.com/data/world-cities).
+
